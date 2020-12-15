@@ -1,19 +1,20 @@
 version: "3"
 services:
   api:
-    container_name: typeorm-api
-    # Mount the source container so that changes are re-built
+    container_name: typeorm-api # Name of build step
+    image: typeorm-api:latest # Name of image + tag
+    build: ./api # Location of Dockerfile
+    restart: always # Restart on failure
+    ports:
+      - '3000:3000' 
     volumes:
       - ./api/src:/app/api/src
-    restart: always
-    build: ./api
-    ports:
-      - '3000:3000'
   react:
-    container_name: react
+    container_name: react-nginx
+    image: react-nginx:latest
+    build: ./frontend
+    restart: always
     volumes:
       - ./frontend/src:/app/frontend/src
-    restart: always
-    build: ./frontend
     ports:
       - '80:80'
