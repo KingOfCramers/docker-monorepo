@@ -1,0 +1,19 @@
+version: "3"
+services:
+  api:
+    container_name: typeorm-api
+    # Mount the source container so that changes are re-built
+    volumes:
+      - ./api/src:/app/api/src
+    restart: always
+    build: ./api
+    ports:
+      - '3000:3000'
+  react:
+    container_name: react
+    volumes:
+      - ./frontend/src:/app/frontend/src
+    restart: always
+    build: ./frontend
+    ports:
+      - '80:80'
